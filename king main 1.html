@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Royal Quest</title>
+    <style>
+        body {
+            background-color: #2c3e50; /* Background filled with color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            /* Web-safe Serif font for offline use */
+            font-family: "Georgia", "Times New Roman", serif;
+        }
+
+        .sticky-note {
+            background-color: #ffeb3b; /* Yellow sticky note */
+            width: 450px;
+            min-height: 450px;
+            padding: 40px;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.4);
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        h1 {
+            /* Web-safe Cursive font for handwritten title */
+            font-family: "Brush Script MT", cursive;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.6rem; /* Different font size for the story */
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* Keyword link style */
+        .story-link {
+            color: #d32f2f;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            font-family: "Georgia", serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            float: right;
+            margin-top: 30px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .next-btn:hover { background-color: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="sticky-note">
+        <h1>The Legend</h1>
+        <p>
+            In a golden age, a wise 
+            <a href="king.html" class="story-link">king</a> lived in a 
+            hidden <a href="palace.html" class="story-link">palace</a>. 
+            He once found a magical <a href="flower.html" class="story-link">flower</a> 
+            that was guarded by a fierce <a href="dragon.html" class="story-link">dragon</a>.
+        </p>
+        
+        <!-- Next button as requested -->
+        <a href="chapter2.html" class="next-btn">Next Chapter &rarr;</a>
+    </div>
+
+</body>
+</html>

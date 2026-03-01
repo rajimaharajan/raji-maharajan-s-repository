@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Match Game</title>
+    <link rel="stylesheet" href="Style1.css">
+</head>
+<body>
+
+    <h1>🎮 Color Match Game</h1>
+    <p>Click the tiles with the <b>SAME COLOR</b></p>
+
+    <div id="score">Score: 0</div>
+
+    <div class="game-board">
+        <div class="tile" onclick="tileClick(0)"></div>
+        <div class="tile" onclick="tileClick(1)"></div>
+        <div class="tile" onclick="tileClick(2)"></div>
+        <div class="tile" onclick="tileClick(3)"></div>
+    </div>
+
+    <button onclick="newRound()">Next Round</button>
+
+    <script src="Script1.js"></script>
+</body>
+</html>

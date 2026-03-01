@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blooming Forest 2026</title>
+    <style>
+        :root {
+            --sky: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+            --mountain: #546e7a;
+            --snake-green: #4CAF50;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background: var(--sky);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .forest-container { position: relative; width: 100vw; height: 100vh; }
+
+        .title {
+            position: absolute; top: 8%; width: 100%;
+            text-align: center; font-size: clamp(2rem, 6vw, 4.5rem);
+            color: white; letter-spacing: 12px;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+            z-index: 10; pointer-events: none;
+        }
+
+        .mountains {
+            position: absolute; bottom: 80px; width: 100%; height: 320px;
+            background: var(--mountain);
+            clip-path: polygon(0% 100%, 0% 80%, 20% 45%, 40% 75%, 60% 25%, 80% 65%, 100% 35%, 100% 100%);
+            z-index: 1; opacity: 0.4;
+        }
+
+        /* Trees */
+        .tree { position: absolute; bottom: 80px; transform-origin: bottom center; animation: sway 6s ease-in-out infinite alternate; z-index: 4; }
+        .trunk { width: 35px; height: 150px; background: #5d4037; border-radius: 5px; }
+        .leaves {
+            position: absolute; top: -110px; left: -65px; width: 165px; height: 165px;
+            background: #2e7d32; border-radius: 50%;
+            box-shadow: 25px 25px 0 #388e3c, -25px 15px 0 #1b5e20;
+        }
+        .t1 { left: 10%; }
+        .t2 { left: 30%; transform: scale(0.8); }
+        .t3 { left: 60%; transform: scale(1.2); }
+        .t4 { left: 85%; transform: scale(0.9); }
+
+        @keyframes sway { from { transform: rotate(-1.5deg); } to { transform: rotate(2.5deg); } }
+
+        /* CSS Snake */
+        .snake-container {
+            position: absolute; bottom: 70px;
+            width: 100px; height: 20px;
+            z-index: 8;
+            animation: slither-path 15s linear infinite;
+        }
+        .snake-body { display: flex; animation: body-wave 0.5s ease-in-out infinite alternate; }
+        .segment { width: 15px; height: 15px; background: var(--snake-green); border-radius: 50%; margin-right: -5px; }
+        .head { background: #2E7D32; position: relative; }
+        .head::after { content: ''; position: absolute; right: 2px; top: 4px; width: 3px; height: 3px; background: white; border-radius: 50%; }
+
+        @keyframes slither-path {
+            0% { left: -100px; transform: scaleX(1); }
+            50% { left: 105vw; transform: scaleX(-1); }
+            100% { left: -100px; }
+        }
+        @keyframes body-wave { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
+
+        /* Flowers */
+        .flower {
+            position: absolute; bottom: 85px;
+            width: 20px; height: 20px;
+            transform: scale(0);
+            transition: transform 3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 7;
+        }
+        .petal {
+            position: absolute; width: 10px; height: 10px;
+            border-radius: 50%;
+            top: 5px; left: 5px;
+        }
+        .petal:nth-child(1) { transform: translate(0, -6px); }
+        .petal:nth-child(2) { transform: translate(6px, 0); }
+        .petal:nth-child(3) { transform: translate(0, 6px); }
+        .petal:nth-child(4) { transform: translate(-6px, 0); }
+        .flower-center {
+            position: absolute; width: 6px; height: 6px;
+            background: yellow; border-radius: 50%;
+            top: 7px; left: 7px;
+        }
+
+        /* Grass */
+        .ground { position: absolute; bottom: 0; width: 100%; height: 95px; background: #1b5e20; z-index: 6; }
+        .blade {
+            position: absolute; bottom: 100%; width: 4px;
+            background: linear-gradient(to top, #1b5e20, #a5d6a7);
+            border-radius: 2px; transform-origin: bottom; transition: height 3s ease-out;
+        }
+
+        /* Bird & Butterfly Logic Same as before */
+        .bird { position: absolute; width: 30px; height: 15px; z-index: 5; transition: all 7s linear; }
+        .bird::before, .bird::after { content: ''; position: absolute; width: 15px; height: 10px; border: 2px solid #333; border-color: #333 transparent transparent transparent; border-radius: 50%/10px 10px 0 0; animation: wing-flap 0.3s ease-in-out infinite alternate; }
+        .bird::after { left: 12px; }
+        @keyframes wing-flap { from { transform: rotate(-20deg); } to { transform: rotate(20deg); } }
+
+        .butterfly { position: absolute; width: 10px; height: 10px; z-index: 12; transition: all 3s ease-in-out; }
+        .wing { position: absolute; width: 10px; height: 12px; border-radius: 50% 50% 0 50%; animation: flap 0.15s infinite alternate; transform-origin: right; }
+        .right { left: 10px; border-radius: 50% 50% 50% 0; transform-origin: left; }
+        @keyframes flap { from { transform: rotateY(0deg); } to { transform: rotateY(80deg); } }
+    </style>
+</head>
+<body>
+
+<div class="forest-container">
+    <h1 class="title">EXPLORE FOREST</h1>
+    <div class="mountains"></div>
+    <div class="snake-container">
+        <div class="snake-body">
+            <div class="segment head"></div><div class="segment"></div><div class="segment"></div><div class="segment"></div>
+        </div>
+    </div>
+
+    <!-- Trees -->
+    <div class="tree t1"><div class="leaves"></div><div class="trunk"></div></div>
+    <div class="tree t2"><div class="leaves"></div><div class="trunk"></div></div>
+    <div class="tree t3"><div class="leaves"></div><div class="trunk"></div></div>
+    <div class="tree t4"><div class="leaves"></div><div class="trunk"></div></div>
+
+    <div class="ground" id="grass-container"></div>
+</div>
+
+<script>
+    const container = document.querySelector('.forest-container');
+    const grassContainer = document.getElementById('grass-container');
+    const fColors = ['#ff6b6b', '#feca57', '#ff9ff3', '#54a0ff', '#ffffff'];
+
+    // 1. Grow Grass & Flowers
+    for (let i = 0; i < 150; i++) {
+        // Create Blade
+        const blade = document.createElement('div');
+        blade.className = 'blade';
+        blade.style.left = Math.random() * 100 + '%';
+        grassContainer.appendChild(blade);
+
+        // Randomly spawn a flower next to some blades
+        if (Math.random() > 0.85) {
+            createFlower(blade.style.left);
+        }
+
+        setTimeout(() => {
+            blade.style.height = (25 + Math.random() * 55) + 'px';
+        }, i * 10);
+    }
+
+    function createFlower(leftPos) {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.style.left = leftPos;
+        const color = fColors[Math.floor(Math.random() * fColors.length)];
+
+        flower.innerHTML = `
+            <div class="petal" style="background:${color}"></div>
+            <div class="petal" style="background:${color}"></div>
+            <div class="petal" style="background:${color}"></div>
+            <div class="petal" style="background:${color}"></div>
+            <div class="flower-center"></div>
+        `;
+        container.appendChild(flower);
+
+        // Bloom after grass grows
+        setTimeout(() => {
+            flower.style.transform = `scale(${0.5 + Math.random()})`;
+        }, 1000 + Math.random() * 2000);
+    }
+
+    // 2. Birds & Butterflies Logic
+    function spawnBird() {
+        const bird = document.createElement('div');
+        bird.className = 'bird';
+        bird.style.top = (15 + Math.random() * 25) + '%';
+        bird.style.left = '-50px';
+        container.appendChild(bird);
+        setTimeout(() => { bird.style.left = '110vw'; }, 100);
+        setTimeout(() => bird.remove(), 8000);
+    }
+
+    function spawnButterfly() {
+        const b = document.createElement('div');
+        b.className = 'butterfly';
+        const color = fColors[Math.floor(Math.random() * fColors.length)];
+        b.innerHTML = `<div class="wing left" style="background:${color}"></div><div class="wing right" style="background:${color}"></div>`;
+        container.appendChild(b);
+        const move = () => {
+            b.style.left = Math.random() * 90 + 'vw';
+            b.style.top = Math.random() * 60 + 'vh';
+            setTimeout(move, 2000 + Math.random() * 2000);
+        };
+        move();
+    }
+
+    setInterval(spawnBird, 5000);
+    for(let i=0; i<6; i++) spawnButterfly();
+</script>
+
+</body>
+</html>
